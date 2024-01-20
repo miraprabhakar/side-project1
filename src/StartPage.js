@@ -1,7 +1,8 @@
+/* eslint-disable no-unused-vars */
 import styled from 'styled-components'
 
-import users from '../users'
-import { saveToStorage } from '../utils/storage'
+import users from './users'
+import { saveToStorage } from './storage'
 
 const Main = styled.main`
   background-color: black;
@@ -42,4 +43,28 @@ const Main = styled.main`
       }
     }
   }
-`
+
+export default function Startpage() {
+  const onClickUser = (id) => {
+    saveToStorage('user', id)
+    window.location.href = '/home'
+  }
+
+  return (
+    <Main>
+      <h1>Select a user</h1>
+      <div className="users">
+        {users.map((u) => (
+          <button
+            onClick={() => onClickUser(u.id)}
+            className="users__user"
+            key={u.id}
+          >
+            <img src={u.image} alt="" />
+            <span className="name">{u.name}</span>
+          </button>
+        ))}
+      </div>
+    </Main>
+    )
+  }
